@@ -3,12 +3,6 @@ name: Deploy Shinka to GitHub Pages
 on:
   push:
     branches: ["main"]
-    paths:
-      - "index.html"
-      - "README.md"
-      - "ARCHITECTURE.md"
-      - ".nojekyll"
-      - ".github/workflows/pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -22,15 +16,14 @@ concurrency:
 
 jobs:
   build:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Upload static site
         uses: actions/upload-pages-artifact@v3
         with:

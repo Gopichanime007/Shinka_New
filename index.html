@@ -227,6 +227,7 @@ else if(page==='audit'){
  '<div class="notice" style="margin-top:16px">Audit coverage depends on actions recorded by the app. Existing task activity is shown here; this is not a server-side or tamper-proof security log.</div></section>';
 }
 $('#appContent').innerHTML=html;
+document.querySelectorAll('#appContent .actions button, #appContent td button').forEach(btn=>{const label=btn.textContent.trim().replace(/\s+/g,' ');const icons={'Edit':'✎','Delete':'⌫','View details':'↗','Open details':'↗','View tasks':'◉'};if(icons[label]){btn.title=label;btn.setAttribute('aria-label',label);btn.innerHTML=icons[label];btn.classList.add('icon-button')}});
 const profile=d.settings.profile||null;
 const topActions=$('#topActions');
 if(topActions){

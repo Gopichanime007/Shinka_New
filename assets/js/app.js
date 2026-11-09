@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-const DB_NAME='shinka-work-hub', DB_VERSION=1;
+const DB_NAME='shinka-work-hub', DB_VERSION=3;
 const STORES=['tasks','activities','timeLogs','projects','settings'];
 const STATUSES=['Open','In Progress','Blocked','Completed'];
 const CODE_STATUSES=['Not Started','In Local','Pushed to Git'];

@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10121b">
-<title>Shinka · Work Hub</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
+<title>Shinka · Work Hub</title>
 <link rel="stylesheet" href="assets/css/app.css">
 
 </head>
@@ -19,12 +19,14 @@
     <button data-page="history"><span class="ico">◷</span>History</button>
     <button data-page="tracker"><span class="ico">◴</span>Time Tracker</button>
     <button data-page="projects"><span class="ico">▦</span>Projects</button>
-    <button data-page="settings"><span class="ico">⚙</span>Settings & Backup</button>
+    <button data-page="assignees"><span class="ico">♙</span>Assignees</button>
+    <button data-page="timesheets"><span class="ico">▤</span>Timesheet Tracker</button>
+    
   </nav></div>
-  <div class="side-bottom"><strong>Local-first workspace</strong><p>Your task records stay in this browser. Export a JSON backup regularly.</p><button class="small" data-action="export">⇩ Export backup</button></div>
+  <div class="side-bottom"><strong>Local-first workspace</strong><p>Your work records stay in this browser. Use the top-right menu for profile and settings.</p></div>
 </aside>
 <main class="main">
-  <header class="topbar"><div><div class="eyebrow" id="pageEyebrow">WORKSPACE OVERVIEW</div><h1 id="pageTitle">Good work starts with clarity.</h1><div class="muted tiny" id="pageSubtitle">Your projects, priorities, and progress in one place.</div></div><div class="top-actions"><button class="ghost hide-mobile" data-action="export">⇩ Backup</button><button class="primary" data-action="new-task">＋ New task</button></div></header>
+  <header class="topbar"><div><div class="eyebrow" id="pageEyebrow">WORKSPACE OVERVIEW</div><h1 id="pageTitle">Good work starts with clarity.</h1><div class="muted tiny" id="pageSubtitle">Your projects, priorities, and progress in one place.</div></div><div class="top-actions" id="topActions"></div></header>
   <div id="appContent"></div>
 </main>
 </div>

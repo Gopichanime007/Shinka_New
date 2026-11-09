@@ -24,3 +24,12 @@ App records live in the browser's IndexedDB and are not stored in this GitHub re
 ## Development
 
 The app is being built incrementally. See the repository's current branch and commit history for implementation status.
+
+
+## Source structure
+
+This is currently a static client-side application. It uses browser IndexedDB for local data storage; it does not have a server-side API/database backend.
+
+- `index.html`: page markup and asset references
+- `assets/css/app.css`: application styles and theme rules
+- `assets/js/app.js`: application logic (kept as one script for now because the current implementation shares private state inside one closure; splitting it into independent modules safely requires a follow-up refactor to explicit shared state and module interfaces)

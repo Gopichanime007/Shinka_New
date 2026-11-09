@@ -95,6 +95,20 @@ html.modal-open,html.modal-open body{overflow:hidden;overscroll-behavior:none}
 .enroll-overlay,.completion-overlay{position:fixed;inset:0;display:grid;place-items:center;overflow:hidden;overscroll-behavior:contain}
 .enroll-modal,.completion-modal{max-height:calc(100vh - 40px);max-height:calc(100dvh - 40px);overflow-y:auto;overflow-x:hidden;overscroll-behavior:contain;scrollbar-gutter:stable;min-height:0;-webkit-overflow-scrolling:touch}
 @media(max-width:560px){.enroll-overlay,.completion-overlay{padding:12px}.enroll-modal,.completion-modal{max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px)}}
+
+/* Consistent dark-theme scrollbars across the workspace and overlays */
+:root{scrollbar-color:rgba(168,139,250,.58) rgba(20,23,35,.72);scrollbar-width:thin}
+*{scrollbar-width:thin;scrollbar-color:rgba(168,139,250,.58) rgba(20,23,35,.72)}
+*::-webkit-scrollbar{width:9px;height:9px}
+*::-webkit-scrollbar-track{background:rgba(20,23,35,.72);border-radius:999px}
+*::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#a78bfa 0%,#7956c8 100%);border:2px solid rgba(20,23,35,.88);border-radius:999px;min-height:36px}
+*::-webkit-scrollbar-thumb:hover{background:linear-gradient(180deg,#c4b5fd 0%,#9875ed 100%)}
+*::-webkit-scrollbar-corner{background:#141723}
+.enroll-modal::-webkit-scrollbar,.completion-modal::-webkit-scrollbar{width:8px}
+.enroll-modal::-webkit-scrollbar-track,.completion-modal::-webkit-scrollbar-track{background:rgba(12,15,24,.5);margin:12px 0;border-radius:999px}
+.enroll-modal::-webkit-scrollbar-thumb,.completion-modal::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#a78bfa,#7652c5);border:2px solid #171b29;border-radius:999px}
+.enroll-modal,.completion-modal{scrollbar-color:#9270df rgba(12,15,24,.5);scrollbar-width:thin}
+
 </style>
 </head>
 <body>

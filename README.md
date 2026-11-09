@@ -28,8 +28,15 @@ The app is being built incrementally. See the repository's current branch and co
 
 ## Source structure
 
-This is currently a static client-side application. It uses browser IndexedDB for local data storage; it does not have a server-side API/database backend.
+The application is a static client-side GitHub Pages app. It does not currently have a server-side backend; user data is stored locally in the browser with IndexedDB.
 
-- `index.html`: page markup and asset references
+- `index.html`: page structure and asset loading only
 - `assets/css/app.css`: application styles and theme rules
-- `assets/js/app.js`: application logic (kept as one script for now because the current implementation shares private state inside one closure; splitting it into independent modules safely requires a follow-up refactor to explicit shared state and module interfaces)
+- `assets/js/core.js`: shared constants, utilities, IndexedDB access, and core data operations
+- `assets/js/tasks.js`: task-related helpers, forms, history grouping, and task presentation
+- `assets/js/views.js`: page rendering and screen composition
+- `assets/js/time-tracker.js`: timer controls and task/time reports
+- `assets/js/timesheets.js`: timesheet entry autosave and exports
+- `assets/js/backup.js`: backup validation/import/export, workspace actions, event handling, and app startup
+
+The JavaScript files are loaded as ordered classic scripts. Keep the order in `index.html` intact because later files use shared declarations from earlier files.

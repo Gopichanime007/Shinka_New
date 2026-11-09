@@ -188,7 +188,7 @@ function field(label,name,value,type='text',extra=''){return '<div class="field"
 function selectField(label,name,values,current){return '<div class="field"><label for="f-'+name+'">'+label+'</label>'+statusSelect(name,values,current)+'</div>'}
 function releaseStageFor(t){if(RELEASE_STAGES.includes(t?.releaseStage))return t.releaseStage;return ({'TEST':'Testing','UAT':'UAT','Production':'Production Deployed','Not Deployed':'Development'})[t?.instanceStatus]||'Development'}
 function historyGroupInfo(task){
- const raw=String(task.taskDate||task.createdAt||'').slice(0,10),match=raw.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);
+ const raw=String(task.taskDate||task.createdAt||'').slice(0,10),match=raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
  if(!match)return {key:'no-date',label:'No date',sortDate:'0000-00-00'};
  const date=new Date(Number(match[1]),Number(match[2])-1,Number(match[3]));
  const nowDate=new Date();nowDate.setHours(0,0,0,0);

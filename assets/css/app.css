@@ -176,3 +176,11 @@ html[data-theme=light] .task-card-action.task-card-delete{background:#fff1f2;col
 .task-card-action.task-card-activity:hover{background:#29213b;border-color:#8a70c0}
 .task-card-action.task-card-activity[aria-expanded=true]{background:#29213b;color:#d9ccff}
 html[data-theme=light] .task-card-action.task-card-activity{background:#f8f5ff;color:#6748a5;border-color:#d9c9f5}
+
+/* Stack task status badges at the card's upper-right, above the action row */
+.history-task-card .task-row-top{display:flex;align-items:flex-start;justify-content:space-between;gap:18px}
+.history-task-card .task-row-top>div:first-child{flex:1 1 auto;min-width:0}
+.history-task-card .task-status-stack{display:flex;flex:0 0 auto;flex-direction:column;align-items:flex-end;gap:7px;padding-top:2px}
+.history-task-card .task-status-stack .pill{margin:0;white-space:nowrap}
+.history-task-card .task-card-actions{justify-content:flex-end;align-items:center}
+@media(max-width:560px){.history-task-card .task-row-top{gap:10px}.history-task-card .task-status-stack{gap:5px}.history-task-card .task-card-actions{justify-content:flex-start}}

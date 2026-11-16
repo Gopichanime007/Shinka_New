@@ -150,3 +150,22 @@ html.modal-open,html.modal-open body{overflow:hidden;overscroll-behavior:none}
 @media(max-width:600px){.time-log-card{grid-template-columns:minmax(0,1fr);gap:10px}.time-log-actions{justify-content:flex-end}.time-log-heading{align-items:flex-start}}
 html[data-theme=light] .time-log-summary{background:#f7f6fb;border-color:#e6e2f0;color:#33364a}
 html[data-theme=light] .time-log-duration{background:#f1ebff;color:#553d91;border-color:#d7c9f5}
+
+
+/* Always-visible task card quick actions */
+.task-card-actions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap;padding-top:10px;margin-top:2px;border-top:1px solid var(--line)}
+.task-card-action{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:32px;padding:6px 10px;border:1px solid var(--line);border-radius:9px;background:var(--panel2);color:var(--muted);font-size:11px;font-weight:700;white-space:nowrap;transform:none}
+.task-card-action:hover{transform:none;border-color:#7560a7;background:#28233b;color:var(--text)}
+.task-card-action>span{font-size:14px;line-height:1;color:var(--purple)}
+.task-card-action.task-card-log{color:#d9ccff;border-color:#554477;background:#29213b}
+.task-card-action.task-card-log:hover{background:#382b51;border-color:#8a70c0}
+.task-card-action.task-card-delete{color:var(--red);border-color:#57313b;background:#291a22}
+.task-card-action.task-card-delete>span{color:var(--red)}
+.task-card-action.task-card-delete:hover{background:#3a202b;border-color:#a34e61}
+.task-card-action.task-card-restore{color:var(--green);border-color:#285b4c;background:#152b27}
+.history-task-card .task-summary-trigger{width:100%}
+.history-task-card .task-summary-footer{align-items:center}
+@media(max-width:560px){.task-card-actions{justify-content:flex-start}.task-card-action{flex:1 1 calc(50% - 7px)}}
+html[data-theme=light] .task-card-action{background:#f8f7fc;color:#555b70}
+html[data-theme=light] .task-card-action.task-card-log{background:#f1ebff;color:#563d91}
+html[data-theme=light] .task-card-action.task-card-delete{background:#fff1f2;color:#b83248}

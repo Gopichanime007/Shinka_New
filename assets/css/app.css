@@ -169,3 +169,10 @@ html[data-theme=light] .time-log-duration{background:#f1ebff;color:#553d91;borde
 html[data-theme=light] .task-card-action{background:#f8f7fc;color:#555b70}
 html[data-theme=light] .task-card-action.task-card-log{background:#f1ebff;color:#563d91}
 html[data-theme=light] .task-card-action.task-card-delete{background:#fff1f2;color:#b83248}
+
+
+/* Activity toggle sits with the task quick actions */
+.task-card-action.task-card-activity{color:var(--purple);border-color:#554477;background:transparent}
+.task-card-action.task-card-activity:hover{background:#29213b;border-color:#8a70c0}
+.task-card-action.task-card-activity[aria-expanded=true]{background:#29213b;color:#d9ccff}
+html[data-theme=light] .task-card-action.task-card-activity{background:#f8f5ff;color:#6748a5;border-color:#d9c9f5}

@@ -130,3 +130,23 @@ html.modal-open,html.modal-open body{overflow:hidden;overscroll-behavior:none}
 .task-picker-empty{padding:22px 14px;text-align:center;color:var(--muted);font-size:13px}
 .task-picker-empty.hidden{display:none}
 @media(max-width:640px){.task-picker-popover{max-height:65vh}.task-picker-results{max-height:55vh}.task-picker-option-main{grid-template-columns:1fr;gap:2px}.task-picker-ticket{grid-column:1}}
+
+
+/* Selected-task time log cards */
+.time-log-list{display:grid;gap:0}
+.time-log-card{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:18px;align-items:center;padding:17px 2px;border-bottom:1px solid var(--line)}
+.time-log-card:last-child{border-bottom:0;padding-bottom:4px}
+.time-log-main{min-width:0;display:grid;gap:9px}
+.time-log-heading{display:flex;align-items:center;justify-content:space-between;gap:14px}
+.time-log-type{font-size:13px;font-weight:750;color:var(--text)}
+.time-log-date{font-size:12px;color:var(--purple);font-weight:650;margin-top:2px}
+.time-log-duration{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;padding:5px 10px;border:1px solid #514273;background:#28213a;color:#e4d7ff;border-radius:9px}
+.time-log-summary{font-size:13px;line-height:1.65;color:#d0d5e3;overflow-wrap:anywhere;padding:9px 11px;background:rgba(10,13,21,.34);border:1px solid rgba(120,130,155,.14);border-radius:9px}
+.time-log-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.time-log-meta-item{display:inline-flex;align-items:center;gap:6px;color:var(--muted);font-size:11px}
+.time-log-meta-label{font-weight:750;color:#aeb7cb}
+.time-log-method{display:inline-flex;align-items:center;padding:2px 8px;border:1px solid var(--line);border-radius:999px;color:#c7b2ff;background:#292039;font-size:10px;font-weight:750}
+.time-log-actions{display:flex;align-items:center}
+@media(max-width:600px){.time-log-card{grid-template-columns:minmax(0,1fr);gap:10px}.time-log-actions{justify-content:flex-end}.time-log-heading{align-items:flex-start}}
+html[data-theme=light] .time-log-summary{background:#f7f6fb;border-color:#e6e2f0;color:#33364a}
+html[data-theme=light] .time-log-duration{background:#f1ebff;color:#553d91;border-color:#d7c9f5}

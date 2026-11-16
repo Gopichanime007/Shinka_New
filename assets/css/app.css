@@ -191,3 +191,8 @@ html[data-theme=light] .task-card-action.task-card-activity{background:#f8f5ff;c
 .history-task-card .task-status-label{font-size:9px;line-height:1.2;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
 .history-task-card .task-status-item .pill{margin:0;white-space:nowrap}
 @media(max-width:560px){.history-task-card .task-status-stack{min-width:96px;gap:7px}.history-task-card .task-status-label{font-size:8px}}
+
+/* Keep each status label inline with its value */
+.history-task-card .task-status-stack{align-items:flex-end;gap:8px}
+.history-task-card .task-status-item{display:flex;flex-direction:row;align-items:center;justify-content:flex-end;gap:8px}
+.history-task-card .task-status-label{font-size:10px;letter-spacing:.02em;text-transform:none;font-weight:700;color:var(--muted)}

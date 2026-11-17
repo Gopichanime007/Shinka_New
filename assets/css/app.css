@@ -264,3 +264,19 @@ html[data-theme=light] .history-task-card .task-card-number{background:#f3effb;b
 html[data-theme=light] .history-task-card .task-card-external{background:#eef7f5;border-color:#d6eae5;color:#39786c}
 html[data-theme=light] .history-task-card .task-card-type{background:#f2f4f7;border-color:#e1e5eb;color:#596273}
 html[data-theme=light] .history-task-card .task-card-project{background:#f0f3fa;border-color:#dce3f2;color:#4c5f8e}
+
+/* Refined task identity: quiet inline metadata, no badge boxes */
+.history-task-card .task-identity-strip{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-top:8px}
+.history-task-card .task-identity-value{display:inline!important;min-height:0!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;font-family:inherit;font-size:12px!important;font-weight:650!important;line-height:1.45!important;letter-spacing:0!important;box-shadow:none!important}
+.history-task-card .task-card-number{color:#c7b4fa!important;font-weight:800!important}
+.history-task-card .task-card-external{color:#b8c2d3!important;font-weight:700!important}
+.history-task-card .task-card-type{color:#aeb7c8!important;font-weight:600!important}
+.history-task-card .task-card-project{color:#e0d9f2!important;font-weight:750!important}
+.history-task-card .task-identity-separator{color:#626b7e;font-size:13px;line-height:1}
+.history-task-card .task-identity-divider{height:1px;width:100%;margin:10px 0 8px;background:linear-gradient(90deg,rgba(167,139,250,.32),rgba(120,130,150,.18) 58%,transparent)}
+html[data-theme=light] .history-task-card .task-card-number{color:#7055a5!important}
+html[data-theme=light] .history-task-card .task-card-external{color:#596579!important}
+html[data-theme=light] .history-task-card .task-card-type{color:#697386!important}
+html[data-theme=light] .history-task-card .task-card-project{color:#44366a!important}
+html[data-theme=light] .history-task-card .task-identity-separator{color:#a2a8b5}
+@media(max-width:560px){.history-task-card .task-identity-strip{gap:7px}.history-task-card .task-identity-value{font-size:11px!important}}

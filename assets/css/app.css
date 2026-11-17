@@ -328,3 +328,10 @@ html[data-theme=light] .history-task-card .task-card-action:hover{background:#f1
 .trash-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;font-size:14px;line-height:1;font-family:inherit;font-style:normal}
 .history-task-card .task-card-action.task-card-delete{min-width:34px}
 .history-task-card .task-card-action.task-card-activity{gap:7px!important}
+
+/* Hand-drawn Shinka outline icons: consistent stroke, size and alignment */
+.history-task-card .task-card-action .shinka-icon{display:block;flex:0 0 16px;width:16px;height:16px;overflow:visible;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.history-task-card .task-card-action{gap:7px!important}
+.history-task-card .task-card-action.task-card-delete{min-width:36px}
+.history-task-card .task-card-action.task-card-delete .shinka-icon{width:17px;height:17px;flex-basis:17px;stroke-width:1.9}
+.history-task-card .task-card-action:hover .shinka-icon{stroke-width:2}

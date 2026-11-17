@@ -315,3 +315,10 @@ html[data-theme=light] .history-task-card .task-status-value{color:#30364a!impor
 html[data-theme=light] .history-task-card .task-card-action+.task-card-action{border-left-color:rgba(105,115,140,.22)!important}
 html[data-theme=light] .history-task-card .task-card-action:hover{background:#f1eef7!important}
 @media(max-width:560px){.history-task-card .task-card-actions{justify-content:flex-start;gap:0}.history-task-card .task-card-action{flex:1 1 auto;padding:7px 8px!important;font-size:10px}.history-task-card .task-identity-strip{gap:7px}.history-task-card .task-identity-value{font-size:10px!important}}
+
+/* Align action icons and labels on a consistent baseline */
+.history-task-card .task-card-actions{align-items:center}
+.history-task-card .task-card-action{display:inline-flex!important;flex-direction:row;align-items:center!important;justify-content:center!important;vertical-align:middle;line-height:1.2!important;text-align:center}
+.history-task-card .task-card-action>span{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 15px;width:15px;height:15px;margin:0!important;padding:0!important;line-height:1!important;font-size:13px!important;font-family:inherit;font-style:normal;vertical-align:middle;position:static;transform:none}
+.history-task-card .task-card-action{gap:7px!important}
+@media(max-width:560px){.history-task-card .task-card-action>span{flex-basis:13px;width:13px;height:13px;font-size:12px!important}}

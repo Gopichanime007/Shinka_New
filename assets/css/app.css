@@ -280,3 +280,15 @@ html[data-theme=light] .history-task-card .task-card-type{color:#697386!importan
 html[data-theme=light] .history-task-card .task-card-project{color:#44366a!important}
 html[data-theme=light] .history-task-card .task-identity-separator{color:#a2a8b5}
 @media(max-width:560px){.history-task-card .task-identity-strip{gap:7px}.history-task-card .task-identity-value{font-size:11px!important}}
+
+/* Task statuses as one clean list, separated by fine rules */
+.history-task-card .task-status-stack{display:flex;flex-direction:column;align-items:stretch;gap:0;min-width:160px;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none}
+.history-task-card .task-status-item{display:flex;align-items:center;justify-content:flex-end;gap:8px;min-height:31px;padding:6px 0!important;margin:0;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;white-space:nowrap}
+.history-task-card .task-status-item+.task-status-item{border-top:1px solid rgba(143,153,177,.2)!important}
+.history-task-card .task-status-icon{font-size:12px;opacity:.75;color:var(--muted)}
+.history-task-card .task-status-name{font-size:10px;font-weight:650;letter-spacing:.01em;color:var(--muted)!important}
+.history-task-card .task-status-value{font-size:11px;font-weight:750;color:var(--text)!important}
+html[data-theme=light] .history-task-card .task-status-item+.task-status-item{border-top-color:rgba(105,115,140,.18)!important}
+html[data-theme=light] .history-task-card .task-status-name{color:#70788b!important}
+html[data-theme=light] .history-task-card .task-status-value{color:#30364a!important}
+@media(max-width:560px){.history-task-card .task-status-stack{min-width:130px}.history-task-card .task-status-item{min-height:28px;padding:5px 0!important}.history-task-card .task-status-name{font-size:9px}.history-task-card .task-status-value{font-size:10px}}

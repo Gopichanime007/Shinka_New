@@ -235,3 +235,19 @@ html[data-theme=light] .history-task-card .task-card-type{background:#f1f3f8;bor
 html[data-theme=light] .history-task-card .task-card-external{background:#eaf8f5;border-color:#c9ebe3;color:#267d70}
 html[data-theme=light] .history-task-card .task-card-project{background:#f3edff;border-color:#dfd2fa;color:#6943a8}
 @media(max-width:560px){.history-task-card .task-status-item{gap:5px;padding:4px 7px}.history-task-card .task-status-name{font-size:9px}.history-task-card .task-status-value{font-size:10px}}
+
+/* Task identity is grouped beneath the title with a clear divider */
+.history-task-card .task-identity-strip{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:9px}
+.history-task-card .task-identity-item{display:inline-flex;align-items:center;gap:6px;min-height:27px;padding:4px 9px;border:1px solid rgba(140,150,180,.2);border-radius:7px;font-size:11px;font-weight:800;line-height:1.25}
+.history-task-card .task-identity-caption{font-size:9px;font-weight:750;letter-spacing:.045em;text-transform:uppercase;opacity:.76}
+.history-task-card .task-card-number{background:rgba(167,139,250,.14);border-color:rgba(167,139,250,.38);color:#d0bcff}
+.history-task-card .task-card-external{background:rgba(70,174,160,.11);border-color:rgba(70,174,160,.3);color:#8ce0d1}
+.history-task-card .task-card-type{background:rgba(130,145,175,.11);border-color:rgba(130,145,175,.24);color:#c4cde0}
+.history-task-card .task-card-project{background:rgba(111,130,220,.12);border-color:rgba(111,130,220,.3);color:#b8c6ff}
+.history-task-card .task-identity-divider{height:1px;width:100%;margin:11px 0 8px;background:linear-gradient(90deg,rgba(167,139,250,.5),rgba(140,150,180,.24) 70%,transparent)}
+.history-task-card .task-card-subline{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+html[data-theme=light] .history-task-card .task-card-number{background:#f1ebff;border-color:#d7c9f5;color:#65469f}
+html[data-theme=light] .history-task-card .task-card-external{background:#eaf8f5;border-color:#c9ebe3;color:#267d70}
+html[data-theme=light] .history-task-card .task-card-type{background:#f1f3f8;border-color:#e0e4ed;color:#596176}
+html[data-theme=light] .history-task-card .task-card-project{background:#eef1ff;border-color:#d8defb;color:#465ba9}
+@media(max-width:560px){.history-task-card .task-identity-strip{gap:5px}.history-task-card .task-identity-item{font-size:10px;padding:4px 7px}.history-task-card .task-identity-caption{font-size:8px}}

@@ -208,3 +208,30 @@ html[data-theme=light] .history-task-card .status-label-work{color:#2769a8;backg
 html[data-theme=light] .history-task-card .status-label-priority{color:#94601b;background:#fff5e6;border-color:#f3dfbf}
 html[data-theme=light] .history-task-card .status-label-code{color:#6943a8;background:#f3edff;border-color:#dfd2fa}
 html[data-theme=light] .history-task-card .status-label-record{color:#a53d50;background:#fff0f2;border-color:#f4d2d8}
+
+/* Unified status chips and clearer task identity */
+.history-task-card .task-status-stack{display:flex;flex-direction:column;align-items:flex-end;gap:7px;min-width:0}
+.history-task-card .task-status-item{display:inline-flex;flex-direction:row;align-items:center;gap:6px;min-height:29px;padding:4px 9px;border:1px solid rgba(140,150,180,.22);border-radius:999px;background:rgba(110,120,150,.09);white-space:nowrap}
+.history-task-card .task-status-icon{font-size:12px;line-height:1;opacity:.9}
+.history-task-card .task-status-name{font-size:10px;line-height:1.2;font-weight:750;color:inherit}
+.history-task-card .task-status-value{font-size:11px;line-height:1.2;font-weight:850;color:inherit}
+.history-task-card .task-status-item.status-label-work{color:#8fc5ff;background:rgba(64,145,230,.10);border-color:rgba(91,163,240,.25)}
+.history-task-card .task-status-item.status-label-priority{color:#e8bd79;background:rgba(211,151,62,.10);border-color:rgba(211,151,62,.25)}
+.history-task-card .task-status-item.status-label-code{color:#c3a5ff;background:rgba(153,111,235,.11);border-color:rgba(153,111,235,.26)}
+.history-task-card .task-status-item.status-label-record{color:#f29aa5;background:rgba(222,93,112,.10);border-color:rgba(222,93,112,.24)}
+.history-task-card .task-id{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:7px}
+.history-task-card .task-card-number{display:inline-flex;align-items:center;padding:4px 9px;border-radius:7px;background:linear-gradient(110deg,rgba(167,139,250,.2),rgba(124,91,190,.13));border:1px solid rgba(167,139,250,.42);color:#c9b5ff;font-size:11px;font-weight:850;letter-spacing:.055em}
+.history-task-card .task-card-type{display:inline-flex;align-items:center;padding:3px 8px;border-radius:6px;background:rgba(130,145,175,.11);border:1px solid rgba(130,145,175,.2);color:#bdc7da;font-size:10px;font-weight:750}
+.history-task-card .task-card-external{display:inline-flex;align-items:center;padding:3px 8px;border-radius:6px;background:rgba(70,174,160,.11);border:1px solid rgba(70,174,160,.28);color:#80d8c7;font-size:10px;font-weight:750}
+.history-task-card .task-card-project{display:inline-flex;align-items:center;padding:2px 7px;border-radius:5px;background:rgba(167,139,250,.10);border:1px solid rgba(167,139,250,.22);color:#c6b3fa;font-size:11px;font-weight:750}
+.history-task-card .task-card-meta-separator{padding:0 2px;color:var(--muted)}
+html[data-theme=light] .history-task-card .task-status-item{background:#f7f6fb;border-color:#e4e0ed}
+html[data-theme=light] .history-task-card .task-status-item.status-label-work{background:#edf6ff;border-color:#cfe5fb;color:#2769a8}
+html[data-theme=light] .history-task-card .task-status-item.status-label-priority{background:#fff6e9;border-color:#f3dfbf;color:#94601b}
+html[data-theme=light] .history-task-card .task-status-item.status-label-code{background:#f5efff;border-color:#dfd2fa;color:#6943a8}
+html[data-theme=light] .history-task-card .task-status-item.status-label-record{background:#fff1f3;border-color:#f4d2d8;color:#a53d50}
+html[data-theme=light] .history-task-card .task-card-number{background:#f1ebff;border-color:#d7c9f5;color:#65469f}
+html[data-theme=light] .history-task-card .task-card-type{background:#f1f3f8;border-color:#e0e4ed;color:#596176}
+html[data-theme=light] .history-task-card .task-card-external{background:#eaf8f5;border-color:#c9ebe3;color:#267d70}
+html[data-theme=light] .history-task-card .task-card-project{background:#f3edff;border-color:#dfd2fa;color:#6943a8}
+@media(max-width:560px){.history-task-card .task-status-item{gap:5px;padding:4px 7px}.history-task-card .task-status-name{font-size:9px}.history-task-card .task-status-value{font-size:10px}}

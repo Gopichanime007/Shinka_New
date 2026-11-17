@@ -322,3 +322,9 @@ html[data-theme=light] .history-task-card .task-card-action:hover{background:#f1
 .history-task-card .task-card-action>span{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 15px;width:15px;height:15px;margin:0!important;padding:0!important;line-height:1!important;font-size:13px!important;font-family:inherit;font-style:normal;vertical-align:middle;position:static;transform:none}
 .history-task-card .task-card-action{gap:7px!important}
 @media(max-width:560px){.history-task-card .task-card-action>span{flex-basis:13px;width:13px;height:13px;font-size:12px!important}}
+
+/* Consistent trash glyph for destructive actions */
+.history-task-card .task-card-action.task-card-delete .trash-icon,
+.trash-icon{display:inline-flex;align-items:center;justify-content:center;width:15px;height:15px;font-size:14px;line-height:1;font-family:inherit;font-style:normal}
+.history-task-card .task-card-action.task-card-delete{min-width:34px}
+.history-task-card .task-card-action.task-card-activity{gap:7px!important}

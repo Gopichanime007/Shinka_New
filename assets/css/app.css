@@ -292,3 +292,26 @@ html[data-theme=light] .history-task-card .task-status-item+.task-status-item{bo
 html[data-theme=light] .history-task-card .task-status-name{color:#70788b!important}
 html[data-theme=light] .history-task-card .task-status-value{color:#30364a!important}
 @media(max-width:560px){.history-task-card .task-status-stack{min-width:130px}.history-task-card .task-status-item{min-height:28px;padding:5px 0!important}.history-task-card .task-status-name{font-size:9px}.history-task-card .task-status-value{font-size:10px}}
+
+/* Task identity sits above the title as a quiet metadata line */
+.history-task-card .task-identity-strip{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:0 0 7px}
+.history-task-card .task-identity-value{display:inline!important;padding:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;font-size:11px!important;line-height:1.35!important;font-weight:650!important}
+.history-task-card .task-card-number{color:#c8b8ef!important;font-weight:800!important}
+.history-task-card .task-card-external{color:var(--muted)!important}
+.history-task-card .task-card-type{color:var(--muted)!important}
+.history-task-card .task-card-project{color:#d6d0e5!important;font-weight:700!important}
+.history-task-card .task-identity-divider{display:none!important}
+
+/* Action buttons become a simple text toolbar with vertical separators */
+.history-task-card .task-card-actions{display:flex;align-items:center;justify-content:flex-end;gap:0;flex-wrap:wrap;padding:9px 0 0;margin-top:9px;border-top:1px solid var(--line)}
+.history-task-card .task-card-action{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:32px;padding:6px 13px!important;margin:0!important;border:0!important;border-radius:0!important;background:transparent!important;box-shadow:none!important;color:var(--muted);font-size:11px;font-weight:700;white-space:nowrap;transform:none}
+.history-task-card .task-card-action+.task-card-action{border-left:1px solid rgba(143,153,177,.24)!important}
+.history-task-card .task-card-action:hover{background:rgba(145,130,190,.08)!important;color:var(--text)!important;transform:none}
+.history-task-card .task-card-action>span{font-size:13px;line-height:1;color:var(--purple)}
+.history-task-card .task-card-action.task-card-activity{color:#bda8f4}
+.history-task-card .task-card-action.task-card-delete{color:#d9828d}
+.history-task-card .task-card-action.task-card-delete>span{color:#d9828d}
+.history-task-card .task-card-action.task-card-restore{color:#7fc5a7}
+html[data-theme=light] .history-task-card .task-card-action+.task-card-action{border-left-color:rgba(105,115,140,.22)!important}
+html[data-theme=light] .history-task-card .task-card-action:hover{background:#f1eef7!important}
+@media(max-width:560px){.history-task-card .task-card-actions{justify-content:flex-start;gap:0}.history-task-card .task-card-action{flex:1 1 auto;padding:7px 8px!important;font-size:10px}.history-task-card .task-identity-strip{gap:7px}.history-task-card .task-identity-value{font-size:10px!important}}

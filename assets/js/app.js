@@ -373,6 +373,9 @@ document.addEventListener('input',e=>{if(!e.target.matches('.task-picker-search'
 document.addEventListener('pointerdown',e=>{if(!e.target.closest('.task-picker')){document.querySelectorAll('.task-picker-popover').forEach(x=>x.classList.add('hidden'));document.querySelectorAll('.task-picker').forEach(x=>x.classList.remove('is-open'));document.querySelectorAll('[data-task-picker-toggle]').forEach(x=>x.setAttribute('aria-expanded','false'))}});
 document.addEventListener('click',async e=>{if(!e.target.closest('.history-toolbar')){const fp=$('#historyFilterPanel'),dm=$('#historyDownloadMenu'),fb=$('[data-action="toggle-history-filters"]'),dbtn=$('[data-action="toggle-history-download"]');fp?.classList.add('hidden');dm?.classList.add('hidden');fb?.setAttribute('aria-expanded','false');dbtn?.setAttribute('aria-expanded','false')}const b=e.target.closest('[data-action]');if(b){try{const a=b.dataset.action;switch(a){
 
+case'toolbox-doc-tool':toolboxDocTool=b.dataset.tool||'images-pdf';await render();break;
+case'toolbox-doc-process':await processToolboxDocument();await render();break;
+case'toolbox-doc-download':downloadToolboxDocument();break;
 case'toolbox-tab':setToolboxTab(b.dataset.tab||'image');await render();break;
 case'toolbox-tool':setToolboxTool(b.dataset.tool||'compress');await render();break;
 case'toolbox-clear':clearToolboxFiles();await render();break;

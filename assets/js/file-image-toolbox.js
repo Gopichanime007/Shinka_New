@@ -29,7 +29,7 @@ function toolboxLoadImage(file){return new Promise((resolve,reject)=>{const url=
 async function toolboxCanvasBlob(canvas,mime,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('This browser could not create the selected image format.')),mime,quality))}
 async function processToolboxImages(){
  if(!toolboxFiles.length)throw new Error('Choose at least one image first.');
- const quality=Number((document.querySelector('#fitQuality')||document.querySelector('#fitResizeQuality')||document.querySelector('#fitConvertQuality'))?.value||80)/100;
+ const quality=toolboxTool==='compress'?Number(document.querySelector('#fitQuality')?.value||80)/100:toolboxTool==='resize'?Number(document.querySelector('#fitResizeQuality')?.value||88)/100:Number(document.querySelector('#fitConvertQuality')?.value||90)/100;
  const output=[];
  for(const item of toolboxFiles){
   const {img,url}=await toolboxLoadImage(item.file);
@@ -39,7 +39,7 @@ async function processToolboxImages(){
    if(toolboxTool==='resize'){
     const w=Number(document.querySelector('#fitWidth')?.value),h=Number(document.querySelector('#fitHeight')?.value);
     if(!Number.isInteger(w)||!Number.isInteger(h)||w<1||h<1||w>12000||h>12000)throw new Error('Enter dimensions between 1 and 12,000 pixels.');
-    if(document.querySelector('#fitAspect')?.checked){const ratio=img.naturalWidth/img.naturalHeight;const chosenW=Math.min(w,h*ratio);const chosenH=chosenW/ratio;width=Math.max(1,Math.round(chosenW));height=Math.max(1,Math.round(chosenH))}
+    if(document.querySelector('#fitAspect')?.checked){const scale=Math.min(w/img.naturalWidth,h/img.naturalHeight);width=Math.max(1,Math.round(img.naturalWidth*scale));height=Math.max(1,Math.round(img.naturalHeight*scale))}
     else{width=w;height=h}
     const chosen=document.querySelector('#fitResizeFormat')?.value||'original';if(chosen!=='original')mime=chosen;
    }else if(toolboxTool==='convert'){mime=document.querySelector('#fitConvertFormat')?.value||'image/jpeg'}
@@ -50,7 +50,7 @@ async function processToolboxImages(){
    ctx.drawImage(img,0,0,width,height);
    const blob=await toolboxCanvasBlob(canvas,mime,quality);
    const ext=toolboxOutputExtension(mime),base=item.file.name.replace(/\.[^.]+$/,'');
-   const reduction=Math.max(-100,Math.round((1-blob.size/item.file.size)*100));
+   const reduction=Math.round((1-blob.size/item.file.size)*100);
    output.push({name:base+(toolboxTool==='compress'?'-compressed':toolboxTool==='resize'?'-resized':'-'+ext)+'.'+ext,blob,width,height,reduction,originalSize:item.file.size});
    canvas.width=0;canvas.height=0;
   }finally{URL.revokeObjectURL(url)}

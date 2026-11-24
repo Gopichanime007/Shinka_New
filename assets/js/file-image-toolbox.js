@@ -166,7 +166,7 @@ document.addEventListener('input',e=>{
   }
  }
 });
-document.addEventListener('dragover',e=>{if(e.target.closest('#fitDropzone')){e.preventDefault();e.target.closest('#fitDropzone').classList.add('dragging')}});
-document.addEventListener('dragleave',e=>{const zone=e.target.closest('#fitDropzone');if(zone&&!zone.contains(e.relatedTarget))zone.classList.remove('dragging')});
-document.addEventListener('drop',e=>{const zone=e.target.closest('#fitDropzone');if(!zone)return;e.preventDefault();zone.classList.remove('dragging');const input=zone.querySelector('input');const dt=new DataTransfer();[...e.dataTransfer.files].forEach(f=>dt.items.add(f));input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}))});
+document.addEventListener('dragover',e=>{const zone=e.target.closest('#fitDropzone,#fitDocDropzone');if(zone){e.preventDefault();zone.classList.add('dragging')}});
+document.addEventListener('dragleave',e=>{const zone=e.target.closest('#fitDropzone,#fitDocDropzone');if(zone&&!zone.contains(e.relatedTarget))zone.classList.remove('dragging')});
+document.addEventListener('drop',e=>{const zone=e.target.closest('#fitDropzone,#fitDocDropzone');if(!zone)return;e.preventDefault();zone.classList.remove('dragging');const input=zone.querySelector('input');const dt=new DataTransfer();const files=[...e.dataTransfer.files];if(input.multiple)files.forEach(f=>dt.items.add(f));else if(files[0])dt.items.add(files[0]);input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}))});
 window.addEventListener('beforeunload',clearToolboxFiles);

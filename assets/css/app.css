@@ -363,3 +363,12 @@ html[data-theme=light] .history-task-card .task-card-action:hover{background:#f1
 .text-button{padding:0;border:0;background:transparent;color:var(--purple);font-size:11px;font-weight:750;cursor:pointer}
 @media(max-width:850px){.json-converter-grid{grid-template-columns:1fr}.json-converter-editor textarea{min-height:240px}}
 @media(max-width:560px){.json-converter-panel{padding:14px}.json-converter-bottom{align-items:stretch;flex-direction:column}.json-converter-bottom .primary{width:100%}.json-converter-tabs{gap:5px}.json-converter-tab{flex-basis:100%}}
+
+/* AL API Page to Raw JSON utility */
+.al-json-panel{display:flex;flex-direction:column;gap:16px}
+.al-source-editor textarea{min-height:430px}
+.al-json-output textarea{min-height:380px}
+.al-json-output{margin-top:2px}
+.al-json-panel .json-converter-bottom{margin-top:0}
+.al-json-panel .json-converter-guide code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--purple)}
+@media(max-width:650px){.al-source-editor textarea,.al-json-output textarea{min-height:280px}}

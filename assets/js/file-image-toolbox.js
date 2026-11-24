@@ -112,7 +112,23 @@ async function processToolboxDocument(){toolboxDocOutput=null;const blob=await c
 function downloadToolboxDocument(){if(!toolboxDocOutput)throw new Error('Create the PDF first.');const url=URL.createObjectURL(toolboxDocOutput.blob),a=document.createElement('a');a.href=url;a.download=toolboxDocOutput.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
 
 function downloadToolboxFile(index){const item=toolboxProcessed[index];if(!item)throw new Error('That processed file is no longer available.');const url=URL.createObjectURL(item.blob),a=document.createElement('a');a.href=url;a.download=item.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
-async function downloadToolboxAll(){if(!toolboxProcessed.length)throw new Error('Process images before downloading.');if(typeof showToast==='function')showToast('Individual downloads are available above. ZIP download will be added in a later phase.')}
+function toolboxCrc32(bytes){let crc=0xffffffff;for(let i=0;i<bytes.length;i++){crc^=bytes[i];for(let j=0;j<8;j++)crc=(crc>>>1)^((crc&1)?0xedb88320:0)}return (crc^0xffffffff)>>>0}
+function toolboxZip16(v){return new Uint8Array([v&255,(v>>>8)&255])}
+function toolboxZip32(v){return new Uint8Array([v&255,(v>>>8)&255,(v>>>16)&255,(v>>>24)&255])}
+function toolboxZipJoin(parts){return toolboxConcatBytes(parts)}
+async function toolboxCreateZip(entries){
+ const enc=new TextEncoder(),local=[],central=[];let offset=0;
+ for(const entry of entries){const name=enc.encode(entry.name),data=new Uint8Array(await entry.blob.arrayBuffer()),crc=toolboxCrc32(data);
+  const header=toolboxZipJoin([toolboxZip32(0x04034b50),toolboxZip16(20),toolboxZip16(0x0800),toolboxZip16(0),toolboxZip16(0),toolboxZip16(0),toolboxZip32(crc),toolboxZip32(data.length),toolboxZip32(data.length),toolboxZip16(name.length),toolboxZip16(0),name]);
+  local.push(header,data);
+  const record=toolboxZipJoin([toolboxZip32(0x02014b50),toolboxZip16(20),toolboxZip16(20),toolboxZip16(0x0800),toolboxZip16(0),toolboxZip16(0),toolboxZip16(0),toolboxZip32(crc),toolboxZip32(data.length),toolboxZip32(data.length),toolboxZip16(name.length),toolboxZip16(0),toolboxZip16(0),toolboxZip16(0),toolboxZip16(0),toolboxZip32(0),toolboxZip32(offset),name]);
+  central.push(record);offset+=header.length+data.length;
+ }
+ const centralBytes=toolboxZipJoin(central),centralOffset=offset,centralSize=centralBytes.length;
+ const end=toolboxZipJoin([toolboxZip32(0x06054b50),toolboxZip16(0),toolboxZip16(0),toolboxZip16(entries.length),toolboxZip16(entries.length),toolboxZip32(centralSize),toolboxZip32(centralOffset),toolboxZip16(0)]);
+ return new Blob([...local,centralBytes,end],{type:'application/zip'});
+}
+async function downloadToolboxAll(){if(!toolboxProcessed.length)throw new Error('Process images before downloading.');const blob=await toolboxCreateZip(toolboxProcessed.map(x=>({name:x.name,blob:x.blob})));const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='shinka-processed-images.zip';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000);if(typeof showToast==='function')showToast('ZIP archive created locally.');}
 document.addEventListener('change',e=>{
  if(e.target?.id==='fitFiles'){const selected=[...e.target.files];const allowed=selected.filter(f=>['image/jpeg','image/png','image/webp'].includes(f.type));if(allowed.length!==selected.length)showToast('Only JPG, PNG and WebP files are supported.',true);for(const file of allowed){if(file.size>30*1024*1024){showToast(file.name+' exceeds the 30 MB per-image limit.',true);continue}toolboxFiles.push({file,preview:URL.createObjectURL(file)})}toolboxProcessed=[];toolboxDocOutput=null;const root=document.querySelector('.fit-shell');if(root)root.outerHTML=renderFileImageToolbox()}
  if(e.target?.id==='fitPreset'&&e.target.value!==''){const p=toolboxPresets[Number(e.target.value)];if(p){document.querySelector('#fitWidth').value=p.w;document.querySelector('#fitHeight').value=p.h}}

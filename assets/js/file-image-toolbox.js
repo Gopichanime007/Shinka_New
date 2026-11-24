@@ -1,0 +1,72 @@
+/* Shinka File & Image Toolbox - image operations stay in memory only. */
+'use strict';
+let toolboxTab='image',toolboxTool='compress',toolboxFiles=[],toolboxProcessed=[];
+const toolboxPresets=[{label:'Avatar · 256×256',w:256,h:256},{label:'Profile · 512×512',w:512,h:512},{label:'HD · 1280×720',w:1280,h:720},{label:'Full HD · 1920×1080',w:1920,h:1080},{label:'Instagram · 1080×1080',w:1080,h:1080}];
+function setToolboxTab(tab){toolboxTab=tab==='document'?'document':'image'}
+function setToolboxTool(tool){toolboxTool=['compress','resize','convert'].includes(tool)?tool:'compress'}
+function toolboxFormatBytes(bytes){if(!Number.isFinite(bytes))return '—';if(bytes<1024)return bytes+' B';if(bytes<1024*1024)return (bytes/1024).toFixed(1)+' KB';return (bytes/1024/1024).toFixed(2)+' MB'}
+function toolboxEscape(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function toolboxFormatLabel(file){return (file.type||'image').split('/').pop().toUpperCase()}
+function toolboxOutputExtension(format){return format==='image/jpeg'?'jpg':format==='image/png'?'png':'webp'}
+function toolboxMime(format){return ({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp'})[String(format).toLowerCase()]||'image/webp'}
+function renderFileImageToolbox(){
+ const isImage=toolboxTab==='image';
+ const tools=[['compress','Compress','Reduce image file size'],['resize','Resize','Change dimensions'],['convert','Convert format','JPG · PNG · WebP']];
+ const toolNav=tools.map(([id,label,desc])=>'<button type="button" class="fit-tool '+(toolboxTool===id?'selected':'')+'" data-action="toolbox-tool" data-tool="'+id+'"><strong>'+label+'</strong><small>'+desc+'</small></button>').join('');
+ const files=toolboxFiles.length?'<div class="fit-file-list">'+toolboxFiles.map((item,i)=>'<article class="fit-file-row"><div class="fit-thumb">'+(item.preview?'<img src="'+item.preview+'" alt="">':'▧')+'</div><div class="fit-file-info"><strong>'+toolboxEscape(item.file.name)+'</strong><small>'+toolboxFormatBytes(item.file.size)+' · '+toolboxEscape(toolboxFormatLabel(item.file))+'</small></div><div class="fit-file-actions"><button type="button" class="fit-icon-btn" data-action="toolbox-move" data-index="'+i+'" data-direction="-1" '+(i===0?'disabled':'')+' aria-label="Move up">↑</button><button type="button" class="fit-icon-btn" data-action="toolbox-move" data-index="'+i+'" data-direction="1" '+(i===toolboxFiles.length-1?'disabled':'')+' aria-label="Move down">↓</button><button type="button" class="fit-icon-btn danger" data-action="toolbox-remove" data-index="'+i+'" aria-label="Remove file">×</button></div></article>').join('')+'</div>':'<div class="fit-empty">No images selected yet</div>';
+ const output=toolboxProcessed.length?'<div class="fit-output-list">'+toolboxProcessed.map((item,i)=>'<article class="fit-output-row"><div><strong>'+toolboxEscape(item.name)+'</strong><small>'+toolboxFormatBytes(item.blob.size)+' · '+item.width+'×'+item.height+(item.reduction!==null?' · '+item.reduction+'% smaller':'')+'</small></div><button type="button" class="fit-small-btn" data-action="toolbox-download" data-index="'+i+'">Download</button></article>').join('')+'</div>':'<div class="fit-empty">Processed images will appear here</div>';
+ const options=toolboxTool==='compress'?'<div class="fit-field"><label for="fitQuality">Image quality <strong id="fitQualityValue">80%</strong></label><input id="fitQuality" type="range" min="10" max="100" step="1" value="80"><small>Applies to JPG and WebP. PNG is lossless and may not shrink with quality changes.</small></div><div class="fit-field"><label for="fitFormat">Output format</label><select id="fitFormat"><option value="original">Keep original (PNG stays PNG)</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option><option value="image/png">PNG</option></select></div>'
+ :toolboxTool==='resize'?'<div class="fit-field"><label for="fitPreset">Dimension preset</label><select id="fitPreset"><option value="">Custom dimensions</option>'+toolboxPresets.map((p,i)=>'<option value="'+i+'">'+p.label+'</option>').join('')+'</select></div><div class="fit-dimensions"><div class="fit-field"><label for="fitWidth">Width (px)</label><input id="fitWidth" type="number" min="1" max="12000" value="1280"></div><div class="fit-field"><label for="fitHeight">Height (px)</label><input id="fitHeight" type="number" min="1" max="12000" value="720"></div></div><label class="fit-check"><input id="fitAspect" type="checkbox" checked> Maintain aspect ratio</label><div class="fit-field"><label for="fitResizeQuality">Output quality <strong id="fitResizeQualityValue">88%</strong></label><input id="fitResizeQuality" type="range" min="10" max="100" value="88"></div><div class="fit-field"><label for="fitResizeFormat">Output format</label><select id="fitResizeFormat"><option value="original">Keep original format</option><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></div>'
+ :'<div class="fit-field"><label for="fitConvertFormat">Convert to</label><select id="fitConvertFormat"><option value="image/jpeg">JPG</option><option value="image/png">PNG</option><option value="image/webp">WebP</option></select></div><div class="fit-field"><label for="fitConvertQuality">Quality <strong id="fitConvertQualityValue">90%</strong></label><input id="fitConvertQuality" type="range" min="10" max="100" value="90"><small>Quality controls JPG and WebP. PNG remains lossless.</small></div>';
+ const content=isImage?'<div class="fit-layout"><section class="fit-panel"><div class="fit-panel-head"><div><h3>Image settings</h3><p>Choose how your images should be processed.</p></div></div>'+toolNav+'<div class="fit-options">'+options+'</div><div class="fit-actions"><button type="button" class="fit-primary" data-action="toolbox-process" '+(!toolboxFiles.length?'disabled':'')+'>Process '+toolboxFiles.length+' image'+(toolboxFiles.length===1?'':'s')+'</button><button type="button" class="fit-secondary" data-action="toolbox-clear">Clear all</button></div></section><section class="fit-panel"><div class="fit-panel-head"><div><h3>Your images</h3><p>Files stay in this browser tab and are never uploaded.</p></div><span class="fit-count">'+toolboxFiles.length+' selected</span></div><label class="fit-dropzone" id="fitDropzone"><input id="fitFiles" type="file" accept="image/jpeg,image/png,image/webp" multiple><span class="fit-upload-icon">＋</span><strong>Drop images here</strong><span>or browse files · JPG, PNG, WebP</span></label>'+files+'</section></div><section class="fit-panel fit-results"><div class="fit-panel-head"><div><h3>Processed results</h3><p>Compare file sizes and download your outputs.</p></div><button type="button" class="fit-secondary" data-action="toolbox-download-all" '+(!toolboxProcessed.length?'disabled':'')+'>Download all</button></div>'+output+'</section>'
+ :'<section class="fit-panel fit-document-soon"><span class="fit-doc-icon">▤</span><h3>Document Converter</h3><p>PDF and Word conversion is planned as the next toolbox phase. Image-to-PDF, PDF rendering and editable PDF-to-DOCX each need dedicated document engines to preserve quality reliably.</p><div class="fit-coming-grid"><div><strong>PDF → Images</strong><small>Render pages as PNG or JPG</small></div><div><strong>Images → PDF</strong><small>Combine and reorder image pages</small></div><div><strong>PDF → DOCX</strong><small>Extract editable text and tables</small></div><div><strong>DOCX → PDF</strong><small>Preserve Word page layout</small></div></div><div class="fit-privacy-note">No documents are uploaded or sent to a third-party service by this module.</div></section>';
+ return '<section class="fit-shell"><div class="fit-intro"><div><div class="eyebrow">LOCAL FILE UTILITIES</div><h2>File &amp; Image Toolbox</h2><p>Small, practical file tools. Your files stay on your device.</p></div><span class="fit-shield">⌑ &nbsp; Private by design</span></div><div class="fit-tabs" role="tablist"><button type="button" data-action="toolbox-tab" data-tab="document" class="'+(!isImage?'selected':'')+'" aria-selected="'+(!isImage)+'">Document Converter</button><button type="button" data-action="toolbox-tab" data-tab="image" class="'+(isImage?'selected':'')+'" aria-selected="'+isImage+'">Image Optimizer</button></div>'+content+'<div class="fit-privacy-note">Processing is local and temporary. Nothing is saved to Shinka tasks, projects, time logs, IndexedDB or LocalStorage.</div></section>';
+}
+function clearToolboxFiles(){toolboxFiles.forEach(x=>x.preview&&URL.revokeObjectURL(x.preview));toolboxFiles=[];toolboxProcessed=[]}
+function removeToolboxFile(index){const item=toolboxFiles[index];if(item?.preview)URL.revokeObjectURL(item.preview);toolboxFiles.splice(index,1);toolboxProcessed=[]}
+function moveToolboxFile(index,direction){const next=index+direction;if(next<0||next>=toolboxFiles.length)return;[toolboxFiles[index],toolboxFiles[next]]=[toolboxFiles[next],toolboxFiles[index]]}
+function toolboxLoadImage(file){return new Promise((resolve,reject)=>{const url=URL.createObjectURL(file),img=new Image();img.onload=()=>resolve({img,url});img.onerror=()=>{URL.revokeObjectURL(url);reject(new Error('Could not read image '+file.name))};img.src=url})}
+async function toolboxCanvasBlob(canvas,mime,quality){return new Promise((resolve,reject)=>canvas.toBlob(blob=>blob?resolve(blob):reject(new Error('This browser could not create the selected image format.')),mime,quality))}
+async function processToolboxImages(){
+ if(!toolboxFiles.length)throw new Error('Choose at least one image first.');
+ const quality=Number((document.querySelector('#fitQuality')||document.querySelector('#fitResizeQuality')||document.querySelector('#fitConvertQuality'))?.value||80)/100;
+ const output=[];
+ for(const item of toolboxFiles){
+  const {img,url}=await toolboxLoadImage(item.file);
+  try{
+   let width=img.naturalWidth,height=img.naturalHeight;
+   let mime=item.file.type||'image/png';
+   if(toolboxTool==='resize'){
+    const w=Number(document.querySelector('#fitWidth')?.value),h=Number(document.querySelector('#fitHeight')?.value);
+    if(!Number.isInteger(w)||!Number.isInteger(h)||w<1||h<1||w>12000||h>12000)throw new Error('Enter dimensions between 1 and 12,000 pixels.');
+    if(document.querySelector('#fitAspect')?.checked){const ratio=img.naturalWidth/img.naturalHeight;const chosenW=Math.min(w,h*ratio);const chosenH=chosenW/ratio;width=Math.max(1,Math.round(chosenW));height=Math.max(1,Math.round(chosenH))}
+    else{width=w;height=h}
+    const chosen=document.querySelector('#fitResizeFormat')?.value||'original';if(chosen!=='original')mime=chosen;
+   }else if(toolboxTool==='convert'){mime=document.querySelector('#fitConvertFormat')?.value||'image/jpeg'}
+   else{const chosen=document.querySelector('#fitFormat')?.value||'original';if(chosen!=='original')mime=chosen}
+   const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+   const ctx=canvas.getContext('2d',{alpha:mime!=='image/jpeg'});if(!ctx)throw new Error('Canvas is not available in this browser.');
+   if(mime==='image/jpeg'){ctx.fillStyle='#ffffff';ctx.fillRect(0,0,width,height)}
+   ctx.drawImage(img,0,0,width,height);
+   const blob=await toolboxCanvasBlob(canvas,mime,quality);
+   const ext=toolboxOutputExtension(mime),base=item.file.name.replace(/\.[^.]+$/,'');
+   const reduction=Math.max(-100,Math.round((1-blob.size/item.file.size)*100));
+   output.push({name:base+(toolboxTool==='compress'?'-compressed':toolboxTool==='resize'?'-resized':'-'+ext)+'.'+ext,blob,width,height,reduction,originalSize:item.file.size});
+   canvas.width=0;canvas.height=0;
+  }finally{URL.revokeObjectURL(url)}
+ }
+ toolboxProcessed.forEach(x=>x.url&&URL.revokeObjectURL(x.url));toolboxProcessed=output.map(x=>({...x,url:URL.createObjectURL(x.blob)}));
+ if(typeof showToast==='function')showToast('Processed '+output.length+' image'+(output.length===1?'':'s')+'.');
+}
+function downloadToolboxFile(index){const item=toolboxProcessed[index];if(!item)throw new Error('That processed file is no longer available.');const url=URL.createObjectURL(item.blob),a=document.createElement('a');a.href=url;a.download=item.name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+async function downloadToolboxAll(){if(!toolboxProcessed.length)throw new Error('Process images before downloading.');if(typeof showToast==='function')showToast('Individual downloads are available above. ZIP download will be added in a later phase.')}
+document.addEventListener('change',e=>{
+ if(e.target?.id==='fitFiles'){const selected=[...e.target.files];const allowed=selected.filter(f=>['image/jpeg','image/png','image/webp'].includes(f.type));if(allowed.length!==selected.length)showToast('Only JPG, PNG and WebP files are supported.',true);for(const file of allowed){if(file.size>30*1024*1024){showToast(file.name+' exceeds the 30 MB per-image limit.',true);continue}toolboxFiles.push({file,preview:URL.createObjectURL(file)})}toolboxProcessed=[];renderFileImageToolbox()}
+ if(e.target?.id==='fitPreset'&&e.target.value!==''){const p=toolboxPresets[Number(e.target.value)];if(p){document.querySelector('#fitWidth').value=p.w;document.querySelector('#fitHeight').value=p.h}}
+});
+document.addEventListener('input',e=>{const mapping={'fitQuality':['fitQualityValue','%'],'fitResizeQuality':['fitResizeQualityValue','%'],'fitConvertQuality':['fitConvertQualityValue','%']};const item=mapping[e.target?.id];if(item){const label=document.getElementById(item[0]);if(label)label.textContent=e.target.value+item[1]}}
+);
+document.addEventListener('dragover',e=>{if(e.target.closest('#fitDropzone')){e.preventDefault();e.target.closest('#fitDropzone').classList.add('dragging')}});
+document.addEventListener('dragleave',e=>{const zone=e.target.closest('#fitDropzone');if(zone&&!zone.contains(e.relatedTarget))zone.classList.remove('dragging')});
+document.addEventListener('drop',e=>{const zone=e.target.closest('#fitDropzone');if(!zone)return;e.preventDefault();zone.classList.remove('dragging');const input=zone.querySelector('input');const dt=new DataTransfer();[...e.dataTransfer.files].forEach(f=>dt.items.add(f));input.files=dt.files;input.dispatchEvent(new Event('change',{bubbles:true}))});
+window.addEventListener('beforeunload',clearToolboxFiles);

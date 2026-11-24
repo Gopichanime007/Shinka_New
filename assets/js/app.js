@@ -375,6 +375,8 @@ document.addEventListener('click',async e=>{if(!e.target.closest('.history-toolb
 
 case'toolbox-doc-tool':toolboxDocTool=b.dataset.tool||'images-pdf';await render();break;
 case'toolbox-doc-process':await processToolboxDocument();await render();break;
+case'toolbox-doc-run':await runToolboxDocument();await render();break;
+case'toolbox-doc-clear':toolboxDocFile=null;toolboxDocOutput=null;await render();break;
 case'toolbox-doc-download':downloadToolboxDocument();break;
 case'toolbox-tab':setToolboxTab(b.dataset.tab||'image');await render();break;
 case'toolbox-tool':setToolboxTool(b.dataset.tool||'compress');await render();break;

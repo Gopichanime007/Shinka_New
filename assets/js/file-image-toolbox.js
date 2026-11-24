@@ -3,6 +3,18 @@
 let toolboxTab='image',toolboxTool='compress',toolboxFiles=[],toolboxProcessed=[];
 const toolboxPresets=[{label:'Avatar · 256×256',w:256,h:256},{label:'Profile · 512×512',w:512,h:512},{label:'HD · 1280×720',w:1280,h:720},{label:'Full HD · 1920×1080',w:1920,h:1080},{label:'Instagram · 1080×1080',w:1080,h:1080}];
 function setToolboxTab(tab){toolboxTab=tab==='document'?'document':'image'}
+/* Capture toolbox tab clicks before the application's general action router.
+   This keeps the standalone module usable even if the main router changes. */
+document.addEventListener('click',e=>{
+ const button=e.target.closest('[data-action="toolbox-tab"]');
+ if(!button)return;
+ e.preventDefault();
+ e.stopImmediatePropagation();
+ setToolboxTab(button.dataset.tab||'image');
+ const shell=document.querySelector('.fit-shell');
+ if(shell)shell.outerHTML=renderFileImageToolbox();
+},true);
+
 function setToolboxTool(tool){toolboxTool=['compress','resize','convert'].includes(tool)?tool:'compress'}
 function toolboxFormatBytes(bytes){if(!Number.isFinite(bytes))return '—';if(bytes<1024)return bytes+' B';if(bytes<1024*1024)return (bytes/1024).toFixed(1)+' KB';return (bytes/1024/1024).toFixed(2)+' MB'}
 function toolboxEscape(value){return String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}

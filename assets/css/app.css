@@ -385,3 +385,15 @@ html[data-theme=light] .history-task-card .task-card-action:hover{background:#f1
 #taskReminderForm .actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:16px}
 @media(max-width:850px){#taskReminderForm .settings-grid{grid-template-columns:minmax(0,1fr)}}
 @media(max-width:560px){#taskReminderForm .setting-card{align-items:flex-start;flex-direction:column}#taskReminderForm .setting-card>label{white-space:normal}#taskReminderForm .actions>*{width:100%}}
+
+/* Task reminder form: deliberate grouping, readable labels, responsive flow */
+.reminder-form{display:grid;gap:16px}
+.reminder-section{border:1px solid var(--line);border-radius:14px;padding:18px;background:var(--surface)}
+.reminder-section h3{margin:0 0 14px;font-size:14px}
+.reminder-controls{display:flex;align-items:flex-end;flex-wrap:wrap;gap:14px 20px}
+.reminder-controls>label:not(.reminder-check){display:grid;gap:7px;color:var(--muted);font-size:12px;min-width:135px}
+.reminder-controls input[type=time],.reminder-controls select{width:100%;min-height:40px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;background:var(--surface-2);color:var(--text);font:inherit}
+.reminder-check{display:flex;align-items:center;gap:8px;min-height:40px;color:var(--text);font-size:13px;white-space:nowrap}
+.reminder-check input{width:17px;height:17px;accent-color:var(--purple)}
+.reminder-form .actions{display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px}
+@media(max-width:650px){.reminder-section{padding:14px}.reminder-controls{align-items:stretch;gap:12px}.reminder-controls>label:not(.reminder-check){flex:1 1 145px}.reminder-form .actions>*{flex:1 1 100%}}

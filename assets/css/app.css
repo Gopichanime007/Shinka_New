@@ -372,3 +372,16 @@ html[data-theme=light] .history-task-card .task-card-action:hover{background:#f1
 .al-json-panel .json-converter-bottom{margin-top:0}
 .al-json-panel .json-converter-guide code{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--purple)}
 @media(max-width:650px){.al-source-editor textarea,.al-json-output textarea{min-height:280px}}
+
+
+/* Task reminder settings: keep controls grouped and responsive */
+#taskReminderForm .settings-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+#taskReminderForm .setting-card{display:flex;align-items:center;flex-wrap:wrap;gap:12px 16px;min-width:0}
+#taskReminderForm .setting-card h3{flex:0 0 100%;margin-bottom:2px}
+#taskReminderForm .setting-card>label{display:inline-flex;align-items:center;gap:7px;white-space:nowrap;font-size:12px;color:var(--text)}
+#taskReminderForm .setting-card .field{display:grid;gap:5px;min-width:130px}
+#taskReminderForm input[type=time],#taskReminderForm select{min-height:36px;padding:7px 9px;border:1px solid var(--line);border-radius:8px;background:var(--surface-2);color:var(--text);font:inherit}
+#taskReminderForm input[type=checkbox]{width:16px;height:16px;accent-color:var(--purple);flex:0 0 auto}
+#taskReminderForm .actions{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:850px){#taskReminderForm .settings-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:560px){#taskReminderForm .setting-card{align-items:flex-start;flex-direction:column}#taskReminderForm .setting-card>label{white-space:normal}#taskReminderForm .actions>*{width:100%}}

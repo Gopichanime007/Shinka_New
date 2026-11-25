@@ -9,7 +9,8 @@ const RELEASE_STAGES=['Development','Testing','UAT','Ready for Production','Prod
 const PRIORITIES=['Low','Medium','High','Critical'];
 const TYPES=['CR','Development','Support','Other'];
 const WORK_TYPES=['Investigation','Development','Testing','Deployment','Meeting','Support','Documentation','Other'];
-let db=null, page='dashboard', currentTaskId=null, taskSearch='', timerInterval=null, toastTimer=null, settingsTab='profile'; let jsonConverterMode='wrapped-to-json'; let timesheetDraftId=null; const timesheetAutosaveTimers=new Map();
+let db=null, page='dashboard', currentTaskId=null, taskSearch='', timerInterval=null, toastTimer=null, settingsTab='profile';
+let reminderCheckInterval=null,reminderConfig={enabled:false,interval:'60',start:'09:30',end:'18:40',lunchStart:'12:45',lunchEnd:'13:30',startReminder:true,beforeLunch:true,afterLunch:true,endReminder:true,snooze:10}; let jsonConverterMode='wrapped-to-json'; let timesheetDraftId=null; const timesheetAutosaveTimers=new Map();
 let runningTimer=null, timerAction='start';
 const $=s=>document.querySelector(s);
 const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -158,7 +159,8 @@ else if(page==='timesheetForm'){const t=currentTaskId?await get('timesheets',cur
 else if(page==='projectForm'){const proj=await getProject(currentTaskId);html='<section class="panel"><div class="panel-head"><div><h2>'+(proj?'Edit project':'New project')+'</h2><div class="panel-sub">Projects help group tasks and dashboard summaries.</div></div></div><form id="projectForm"><div class="form-grid">'+field('Project name *','name',proj?.name||'','text','required maxlength="120"')+'<div class="field span2"><label>Description</label><textarea name="description" maxlength="2000">'+esc(proj?.description||'')+'</textarea></div></div><div class="actions"><button type="button" data-action="cancel-form">Cancel</button><button class="primary" type="submit">Save project</button></div></form></section>'}
 else if(page==='settings'){
  const tab=settingsTab||'profile',profile=d.settings.profile||{};
- const tabs=[['profile','Profile','Your identity and personal details'],['appearance','Appearance','Theme and display preferences'],['numbering','No. Series','Internal task numbering and prefix'],['backup','Data & backup','Export, restore, and backup reminders'],['audit','Audit & integrity','Activity history and workspace safety']];
+ const reminder=d.settings.taskReminder||reminderConfig;
+ const tabs=[['profile','Profile','Your identity and personal details'],['appearance','Appearance','Theme and display preferences'],['numbering','No. Series','Internal task numbering and prefix'],['backup','Data & backup','Export, restore, and backup reminders'],['reminders','Task reminders','Windows notifications and workday schedule'],['audit','Audit & integrity','Activity history and workspace safety']];
  const tabButton=(id,label,sub)=>'<button class="settings-tab '+(tab===id?'selected':'')+'" data-action="settings-tab" data-tab="'+id+'"><strong>'+label+'</strong><span>'+sub+'</span></button>';
  html='<div class="settings-layout"><aside class="settings-nav"><div class="settings-nav-title">SETTINGS</div>'+tabs.map(t=>tabButton(...t)).join('')+'</aside><section class="panel settings-content"><div class="panel-head"><div><h2>'+tabs.find(t=>t[0]===tab)[1]+'</h2><div class="panel-sub">'+tabs.find(t=>t[0]===tab)[2]+'</div></div></div>';
  if(tab==='profile'){
